@@ -1,0 +1,18 @@
+#include <iostream>
+#include <cstdio>
+
+long a[1000000], b[1000000];
+int n, trustWorthy;
+
+int main(void) {
+    
+    std::scanf(" %d", &n);
+    
+    trustWorthy = n;
+
+    for (int i = 0; i < n; ++i) {
+        std::scanf(" %ld %ld", &a[i], &b[i]);
+    }
+    
+    return 0;
+}
