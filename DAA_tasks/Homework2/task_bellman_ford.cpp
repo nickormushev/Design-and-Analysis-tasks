@@ -1,3 +1,4 @@
+//overly complicated slow and might not work. But still my first attempt at bellman_ford
 #include <cstdio>
 #include <iostream>
 #include <utility>
@@ -11,19 +12,12 @@ struct Edge {
     int from;
     int to;
     int cost;
-
-    //bool operator==(const Edge& other) {
-    //    return this == &other;
-    //}
 };
 
 Edge g[500000];
 //first for weight. Second for number of routes
 std::pair<int, int> dist[10000];
 std::vector<Edge*> predecessor[10000];
-
-//ignore
-//bool visited[10000];
 
 void cleans(std::vector<Edge*>& arr) {
     while(!arr.empty()) {
@@ -47,7 +41,6 @@ void bellman_ford(int start) {
         for(int i = 0; i < m; ++i) {
             if (dist[g[i].from].first != 1 && dist[g[i].to].first > dist[g[i].from].first + g[i].cost) {
                 change = true;
-                //visited[g[i].to] = true;
 
                 dist[g[i].to].first = dist[g[i].from].first + g[i].cost;
                 dist[g[i].to].second = dist[g[i].from].second;
@@ -70,7 +63,6 @@ int main() {
     std::scanf(" %d %d", &n, &m);
     int from, to, w, src, dest;
 
-    //g.reserve(n);
     for (int i = 0; i < m; ++i) {
         std::scanf(" %d %d %d", &from, &to, &w);
         g[i] = { from, to, -w };

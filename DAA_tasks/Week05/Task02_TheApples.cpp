@@ -23,14 +23,15 @@ bool coordineateValidity(int newX, int newY, int n, int m) {
 void contaminate(int n, int m, int t, int x, int y, long& counter, std::queue<std::pair<int, int>>& q) {
     std::pair<int, int> directionArr[4] = { { 1, 0 }, { -1, 0 }, { 0, -1 }, { 0, 1 } };
     int newX, newY;
-    std::cout << "x and y: " <<  x << y << std::endl;
+    //std::cout << x << " : " << y << std::endl; 
     for (int i = 0; i < 4; ++i) {
         newX = directionArr[i].first + x;
         newY = directionArr[i].second + y;
-        std::cout << newX << " " << newY << std::endl;
-        if(coordineateValidity(newX, newY, n, m) && (appleArray[newX][newY] > t || appleArray[newX][newY] == 0)) {// 
+
+        if(coordineateValidity(newX, newY, n, m) && (appleArray[newX][newY] > t || appleArray[newX][newY] == 0)) { 
+            //std::cout << newX << " " << newY << std::endl;
             q.push({ newX, newY });
-            counter += !(appleArray[newX][newY] > t) ;  
+            counter += !(appleArray[newX][newY] > t);
             appleArray[newX][newY] = t;
         }
     }
@@ -42,19 +43,13 @@ void bfs(int n, int m, int t, int startX, int startY, long& counter) {
     std::pair<int, int> topBadApple = { startX, startY };
     q.push({ startX, startY });
     int startT = 1;
-    
-    if(appleArray[startX][startY] != 0) {
-        counter--;
-    }
 
-    appleArray[startX][startY] = 1;
-
-    while(!q.empty() && t >= startT) { 
+    while(!q.empty() && t >= startT) {
 
         while(!q.empty() && appleArray[topBadApple.first][topBadApple.second] == startT) {
-            contaminate(n, m, startT + 1, topBadApple.first, topBadApple.second, counter, q);
-            printArray(n,m);
             q.pop();
+            contaminate(n, m, startT + 1, topBadApple.first, topBadApple.second, counter, q);
+            //printArray(n,m);
             topBadApple = q.front();
         }
 
@@ -73,12 +68,14 @@ long countBadApples(int n, int m, int t, int badAppleCounter) {
     return countAfterTDays;
 }
 
-int main(void) {
+int main() {
     int m, n, t, badAppleCounter = 0;
     
     std::scanf(" %d %d %d", &n, &m, &t);
     
     while(std::scanf(" %d %d", &posX[badAppleCounter], &posY[badAppleCounter]) == 2) {
+        appleArray[--posX[badAppleCounter]][--posY[badAppleCounter]] = 1; //sets the start fruit coordinates as 1
+
         badAppleCounter++;
     }
     
